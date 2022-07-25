@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do-List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <label for="Todoitem">ToDo Item:</label>
+    <input id="taskInput" type="text">
+    <button type="button" onclick="addItem()">Add Item</button>
+<!-- imp -->
+    <div id="taskList">
+
+    </div>
+</body>
+
+<script>
+    
+    var tasks = [{ taskID : 1, taskValue : "Sanath",checked : false}];
+    function addItem() {
+        var singleTask = {
+        taskID : tasks.length+1,
+        taskValue : document.getElementById("taskInput").value,
+        checked: false
+    }; 
+    tasks.push(singleTask);
+    console.log('added Item!')
+    console.log(tasks);
+    showDataList()
+    }
+    //id parameter in checkTheTask
+    function checkTheTask(id, isChecked){
+        const task = document.getElementById(id.toString())
+        task.innerHTML = isChecked ? `${task.innerHTML}` : `<s> ${task.innerHTML} </s>`
+        // for loop through tasks and find the item with same ID and checked : true// Or false, toggle
+        tasks.map((task, index) =>{
+           if (id === task.taskID) {
+            task.checked = !task.checked
+            }
+           }
+        )
+    }
+    function showDataList(){
+        let taskListUI = document.getElementById('taskList');
+        taskListUI.innerHTML = '';
+        tasks.map((task, index) =>{
+        console.log('render',task);
+        //get the div for the element
+        //add html for the task - 
+        let html = `<div style="display: flex;"> <input type="checkbox"  class="checkbox-todo" onclick=checkTheTask(${task.taskID}, ${task.checked})> <section id = ${task.taskID}>ID : ${task.taskID} Task : ${task.taskValue}</section> </div>`
+        taskListUI.innerHTML = taskListUI.innerHTML + html;
+        })
+    }
+    showDataList()
+
+</script>
+
+</html>
